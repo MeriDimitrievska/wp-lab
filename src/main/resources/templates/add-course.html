@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Course</title>
+</head>
+<body>
+<h1>Add or edit course</h1>
+<form th:action="@{/courses/addCourse}" th:method="POST">
+    <label th:for="name">Course name</label>
+    <input type="text" required id="name" name="name" placeholder="Enter name"
+    th:value="${course}!=null ? ${course.name} : ''"> <br/>
+    <label th:for="name">Description</label>
+    <input type="text" required id="description" name="description" placeholder="Enter description"
+           th:value="${course}!=null ? ${course.description} : ''"> </br>
+    <label>Teacher</label>
+    <select name="id">
+        <option th:each="t:${teachers}" th:text="${t.fullName}" th:value="${t.id}"></option>
+    </select> <br/>
+    <label>Date: </label>
+    <input type="date" id="date" data-format="yyyy-MM-dd" name="date">
+    <button type="submit">Submit</button>
+</form>
+</body>
+</html>

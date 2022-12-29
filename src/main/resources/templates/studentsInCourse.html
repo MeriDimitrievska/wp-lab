@@ -1,0 +1,33 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="utf-8">
+    <title>WP lab - Students in Course</title>
+
+</head>
+<body>
+<header>
+    <h1>Students in Course </h1>
+</header>
+<form th:method="POST" th:action="@{/StudentEnrollmentSummary}">
+    <div th:text="${course.name}"></div>
+    <ul>
+        <li th:each="student:${course.students}">
+            <span th:text="${student.name}"></span>
+            <span>&nbsp</span>
+            <span th:text="${student.surname}"></span>
+            <span>&nbsp(</span>
+            <span th:text="${student.username}"></span>
+            <span>) Grade : </span>
+            <span th:each="grade: ${grades}">
+                <span th:if="${grade.student.id==student.id &&
+                grade.course.courseId==course.courseId}" th:text="${grade.grade}"></span>
+            </span>
+<!--            <span><input th:if="${!student.hasGrade}" type="submit" value="Add Grade" name="btn" th:value="addGrade"></span>-->
+            <th:block sec:authorize="hasRole('ROLE_ADMIN')"> <a th:if="${!student.hasGrade}" th:href="@{'/grade/{courseId}/{username}' (courseId=${course.courseId}, username=${student.username})}">Add Grade</a>
+        </th:block></li>
+    </ul>
+    <input type="submit" value="Back" name="btn" th:value="back"/>
+</form>
+
+</body>
+</html>

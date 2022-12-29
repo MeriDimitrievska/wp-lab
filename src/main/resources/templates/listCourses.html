@@ -1,0 +1,32 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="utf-8">
+    <title>Welcome and Choose a Course</title>
+    <style type="text/css">
+        body {
+            width: 800px;
+            margin: auto;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <h1>Courses List</h1>
+</header>
+<form th:action="@{/listCourses}" th:method="POST">
+<!--    <h1>Number of sessions: <th:block th:text="${sessions}"></th:block></h1>-->
+    <a th:href="@{'/login'}">Log in</a>
+    <a th:href="@{'/logout'}">Log out</a>
+    <th:block sec:authorize="hasRole('ROLE_ADMIN')">  <a href="/courses/add" style="text-decoration: none; color: black; border-radius: 5px; background-color: darkgray; padding: 1%">Add course</a> </th:block>
+    <h2>Choose course:</h2>
+    <div th:each="course:${allCourses}">
+        <input type="radio" id="courseId" name="courseId" th:value="${course.courseId}" th:text="${course.name}"/>
+       <th:block sec:authorize="hasRole('ROLE_ADMIN')"> <a th:href="@{'/courses/edit/{id}' (id=${course.courseId})}" style="text-decoration: none; color: black; border-radius: 5px; background-color: darkgray;">Edit</a> </th:block>
+        <th:block sec:authorize="hasRole('ROLE_ADMIN')"> <a th:href="@{'/courses/delete/{id}' (id=${course.courseId})}" style="text-decoration: none; color: black; border-radius: 5px; background-color: darkgray;">Delete</a> </th:block>
+        <br/>
+    </div>
+    <br/>
+    <input type="submit" th:value="Submit" style="background-color: darkgray"/>
+</form>
+</body>
+</html>

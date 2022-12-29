@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Grade</title>
+</head>
+<body>
+<form th:action="@{/grade/add/{courseId}/{studentUsername}}" th:method="POST">
+<label>Subject name: <th:block th:text="${courseName}"  th:value="${courseId}"></th:block></label> <br/>
+<label>Student name: <th:block th:text="${studentName}"  th:value="${studentUsername}"></th:block></label> <br/>
+<label>Grade: </label> <input type="text" id="grade" name="grade"> <br/>
+<label>Date of exam: </label><input type="datetime-local" id="date" name="date"/>
+<a th:method="POST" th:href="@{/grade/add/{courseId}/{studentUsername} (courseId=${courseId}, username=${studentUsername})}">Submit</a>
+</form>
+</body>
+</html>
